@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go_dev/internal/controllers"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
@@ -39,7 +40,7 @@ func CheckError(e error) {
 }
 
 func main() {
-
+	port := os.Getenv("PORT")
 	defer db.Close()
 	router := gin.Default()
 
@@ -49,7 +50,7 @@ func main() {
 	router.PUT("/products/:guid", controllers.UpdateProduct(db))
 	router.DELETE("/products/:guid", controllers.DeleteProduct(db))
 
-	log.Fatal(router.Run(":9090"))
+	log.Fatal(router.Run(":" + port))
 }
 
 // package main
