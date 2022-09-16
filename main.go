@@ -43,7 +43,9 @@ func main() {
 	port := os.Getenv("PORT")
 	defer db.Close()
 	router := gin.Default()
-
+	router.GET("/home", func(c *gin.context){
+		return c.JSON(200, gin.H{"hello": "home"})
+	})
 	router.GET("/products", controllers.GetProducts(db))
 	router.GET("/products/:guid", controllers.GetProduct(db))
 	router.POST("/products", controllers.AddProduct(db))
